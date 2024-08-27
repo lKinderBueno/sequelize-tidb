@@ -21,8 +21,9 @@ try {
   throw new Error(
     'Failed to load Sequelize. Have you installed it? Run `npm install sequelize`'
   );
+  
 }
-
+const version_helper = require('./version_helper.js')
 const semver = require('semver');
 const _ = require("lodash");
 
