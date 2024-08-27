@@ -21,7 +21,7 @@ var __spreadValues = (a, b) => {
 const _ = require("lodash");
 const Utils = require('sequelize/lib/utils');
 
-const QueryGenerator = require('sequelize/lib/dialects/postgres/query-generator');
+const QueryGenerator = require('sequelize/lib/dialects/abstract/query-generator');
 
 QueryGenerator.prototype.selectQuery = function selectQuery(tableName, options, model) {
   options = options || {};
@@ -180,7 +180,7 @@ QueryGenerator.prototype.selectQuery = function selectQuery(tableName, options, 
 
   if (options.compromiseConsistency === true)
     mainQueryItems.push(" AS OF TIMESTAMP NOW() - INTERVAL 10 SECOND");
-
+  
   if (Object.prototype.hasOwnProperty.call(options, "where") && !options.groupedLimit) {
     options.where = this.getWhereConditions(options.where, mainTable.as || tableName, model, options);
     if (options.where) {
