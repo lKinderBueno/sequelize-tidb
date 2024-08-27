@@ -5,6 +5,12 @@
     "lint": "prettier --write .",
     "test": "env CRDB_VERSION=$npm_config_crdb_version mocha --check-leaks --colors -t 300000 --reporter spec \"tests/*_test.js\""
   },
+  "main": "source/index.js",
+  "types": "types",
+  "files": [
+    "source",
+    "types"
+  ],  
   "dependencies": {
     "lodash": "^4.17.20",
     "p-settle": "^4.1.1",
