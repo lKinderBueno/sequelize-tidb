@@ -178,8 +178,11 @@ QueryGenerator.prototype.selectQuery = function selectQuery(tableName, options, 
     mainQueryItems.push(mainJoinQueries.join(""));
   }
 
-  if (options.compromiseConsistency === true)
-    mainQueryItems.push(" AS OF TIMESTAMP NOW() - INTERVAL 10 SECOND");
+  if (options.compromiseConsistency){
+    if(typeof options.compromiseConsistency === 'number')
+      mainQueryItems.push(` TIDB_BOUNDED_STALENESS(NOW() - INTERVAL ${options.compromiseConsistency} SECOND, NOW())`);
+    else mainQueryItems.push(" TIDB_BOUNDED_STALENESS(NOW() - INTERVAL 10 SECOND, NOW())");
+  }
   
   if (Object.prototype.hasOwnProperty.call(options, "where") && !options.groupedLimit) {
     options.where = this.getWhereConditions(options.where, mainTable.as || tableName, model, options);
