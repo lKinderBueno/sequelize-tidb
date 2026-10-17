@@ -180,8 +180,8 @@ QueryGenerator.prototype.selectQuery = function selectQuery(tableName, options, 
 
   if (options.compromiseConsistency){
     if(typeof options.compromiseConsistency === 'number')
-      mainQueryItems.push(` AS OF TIMESTAMP TIDB_BOUNDED_STALENESS(NOW() - INTERVAL ${options.compromiseConsistency} SECOND, NOW())`);
-    else mainQueryItems.push(" AS OF TIMESTAMP TIDB_BOUNDED_STALENESS(NOW() - INTERVAL 20 SECOND, NOW())");
+      mainQueryItems.push(` AS OF TIMESTAMP NOW() - INTERVAL ${options.compromiseConsistency} SECOND`);
+    else mainQueryItems.push(" AS OF TIMESTAMP NOW() - INTERVAL 20 SECOND");
   }
   
   if (Object.prototype.hasOwnProperty.call(options, "where") && !options.groupedLimit) {
